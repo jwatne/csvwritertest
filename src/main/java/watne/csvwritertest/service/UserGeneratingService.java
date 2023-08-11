@@ -6,8 +6,8 @@ import watne.csvwritertest.model.user;
 
 public class UserGeneratingService {
     public static List<user> getUserList() {
-        final List<user> userList = List.of(new user(0, "john.watne@state.mn.us", "John Watne"),
-                new user(1, "doneil@state.mn.us", "Dave O'Neil"));
+        final List<user> userList = List.of(new user(0, "first.person@dev.null", "First Person"),
+                new user(1, "second.person@bogus.org", "Second Person"));
         return userList;
     }
 }
