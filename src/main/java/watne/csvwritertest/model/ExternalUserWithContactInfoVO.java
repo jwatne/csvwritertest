@@ -1,9 +1,14 @@
 package watne.csvwritertest.model;
 
+import com.opencsv.bean.CsvBindByName;
+import com.opencsv.bean.CsvBindByPosition;
+
 /**
  * Child class of {@link BasicExternalUserVO} that includes email address.
  */
 public class ExternalUserWithContactInfoVO extends BasicExternalUserVO {
+    @CsvBindByPosition(position = 1)
+    @CsvBindByName(column = "name")
     private String name;
 
     public ExternalUserWithContactInfoVO(final String email) {
