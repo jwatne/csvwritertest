@@ -10,5 +10,4 @@ public class CsvwritertestApplication {
 		SpringApplication.run(CsvwritertestApplication.class, args);
 
 	}
-
 }

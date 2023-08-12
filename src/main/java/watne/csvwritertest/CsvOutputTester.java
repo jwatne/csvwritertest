@@ -51,30 +51,24 @@ public class CsvOutputTester implements CommandLineRunner {
         if (!CollectionUtils.isEmpty(userList)) {
             final ExternalUserVO externalUserVO = userList.get(0);
 
-            if (externalUserVO instanceof ExternalUserWithContactInfoVO) {
-                final List<ExternalUserWithContactInfoVO> usersWithInfo = new ArrayList<>();
-                userList.forEach(x -> usersWithInfo.add((ExternalUserWithContactInfoVO) x));
-                printInfo(usersWithInfo, ExternalUserWithContactInfoVO.class);
-            } else if (externalUserVO instanceof BasicExternalUserVO) {
-                final List<BasicExternalUserVO> basicUsers = new ArrayList<>();
-                userList.forEach(x -> basicUsers.add((BasicExternalUserVO) x));
-                printInfo(basicUsers, BasicExternalUserVO.class);
-            } else {
-                System.out.println("*** UNKNOWN TYPE IN LIST: " + externalUserVO.getClass().getName());
+            try {
+                if (externalUserVO instanceof ExternalUserWithContactInfoVO) {
+                    final List<ExternalUserWithContactInfoVO> usersWithInfo = new ArrayList<>();
+                    userList.forEach(x -> usersWithInfo.add((ExternalUserWithContactInfoVO) x));
+                    System.out.println(
+                            csvService.getCsvForItemsInList(usersWithInfo, ExternalUserWithContactInfoVO.class));
+                } else if (externalUserVO instanceof BasicExternalUserVO) {
+                    final List<BasicExternalUserVO> basicUsers = new ArrayList<>();
+                    userList.forEach(x -> basicUsers.add((BasicExternalUserVO) x));
+                    System.out.println(csvService.getCsvForItemsInList(basicUsers, BasicExternalUserVO.class));
+                } else {
+                    System.out.println("*** UNKNOWN TYPE IN LIST: " + externalUserVO.getClass().getName());
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
             }
         } else {
             System.out.println("*** EMPTY LIST!!! ***");
         }
     }
-
-    private <T> void printInfo(final List<T> usersWithInfo,
-            final Class<T> listClass) {
-        try {
-            System.out.println(
-                    csvService.getCsvForItemsInList(usersWithInfo, listClass));
-        } catch (final Exception e) {
-            e.printStackTrace();
-        }
-    }
-
 }
